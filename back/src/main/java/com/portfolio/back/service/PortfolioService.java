@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.aggregation.BooleanOperators.Or;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -84,8 +85,8 @@ public class PortfolioService {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         Map<String, Object> res = new HashMap<>();
-
-        if (id == null){
+        System.out.println(id + "ini string id");
+        if ("".equals(id)){
             List<Portfolio> getAll = portfolioRepository.findAll();
 
             res.put("code", HttpStatus.OK.value());
