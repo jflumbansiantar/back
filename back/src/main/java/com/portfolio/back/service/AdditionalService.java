@@ -26,6 +26,8 @@ public class AdditionalService {
     @Autowired
     private AdditionalRepository additionalRepository;
 
+    private static final String SUCCESS = "success";
+
     @SneakyThrows(Exception.class)
     public ResponseEntity<Object> createAdditional(CreateAdditional dto){
         HttpHeaders headers = new HttpHeaders();
@@ -40,7 +42,7 @@ public class AdditionalService {
         additionalRepository.save(additional);
 
         res.put("code", HttpStatus.CREATED.value());
-        res.put("success", true);
+        res.put(SUCCESS, true);
         res.put("data", additional);
 
         return ResponseEntity.status(HttpStatus.CREATED).headers(headers).body(res);
@@ -64,11 +66,11 @@ public class AdditionalService {
             additionalRepository.save(data);
 
             res.put("code", HttpStatus.OK.value());
-            res.put("success", true);
+            res.put(SUCCESS, true);
             res.put("data", data);
         } else {
             res.put("code", HttpStatus.NOT_FOUND.value());
-            res.put("success", false);
+            res.put(SUCCESS, false);
             res.put("data", null);
         }
 
@@ -86,7 +88,7 @@ public class AdditionalService {
             List<Additional> getAll = additionalRepository.findAll();
 
             res.put("code", HttpStatus.OK.value());
-            res.put("success", true);
+            res.put(SUCCESS, true);
             res.put("data", getAll);
         
         } else {
@@ -94,11 +96,11 @@ public class AdditionalService {
     
             if(found.isPresent()){
                 res.put("code", HttpStatus.OK.value());
-                res.put("success", true);
+                res.put(SUCCESS, true);
                 res.put("data", found);
             } else {
                 res.put("code", HttpStatus.NOT_FOUND.value());
-                res.put("success", false);
+                res.put(SUCCESS, false);
                 res.put("data", null);
             }
         }
@@ -121,21 +123,21 @@ public class AdditionalService {
                 additionalRepository.deleteById(id);
             
                 res.put("code", HttpStatus.OK.value());
-                res.put("success", true);
+                res.put(SUCCESS, true);
                 res.put("message", ("Data is deleted"));
             
             } else {
             
                 res.put("code", HttpStatus.NOT_FOUND.value());
-                res.put("success", false);
+                res.put(SUCCESS, false);
                 res.put("data", null);
             }
-          } catch (Exception e) {
+        } catch (Exception e) {
             
             res.put("code", HttpStatus.NOT_FOUND.value());
-                res.put("success", e);
+                res.put(SUCCESS, e);
                 res.put("data", null);
-          }
+        }
         return ResponseEntity.status(HttpStatus.OK).headers(headers).body(res);
     }
 
@@ -155,11 +157,11 @@ public class AdditionalService {
             additionalRepository.save(data);
 
             res.put("code", HttpStatus.OK.value());
-            res.put("success", true);
+            res.put(SUCCESS, true);
             res.put("data", data);
         } else {
             res.put("code", HttpStatus.NOT_FOUND.value());
-            res.put("success", false);
+            res.put(SUCCESS, false);
             res.put("data", null);
         }
 
