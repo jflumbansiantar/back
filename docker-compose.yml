@@ -1,6 +1,29 @@
 version: "3.9"
 services:
-  web:
-    build: .
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports: 
+      - 27071:27071
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+  api_service:
+    image: apps
+    env_file:
+      - ./.env
+    environment:
+      - spring.data.mongodb.uri=mongodb+srv://$MONGO_USER:$MONGO_PASS@cluster0.oq85b5h.mongodb.net/
+    build: ./back
+    restart: always
     ports:
-      - "8181:8181"
+      - 8181:8181
+    depends_on:
+      - mongo-express
